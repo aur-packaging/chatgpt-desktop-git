@@ -41,18 +41,19 @@ build() {
 
 package() {
 	# Install desktop file
-	install -Dm644 "${srcdir}/chatgpt.desktop" "${pkgdir}/usr/share/applications/chatgpt.desktop"
-	
+	install -Dm644 "${srcdir}/chat-gpt.desktop" -t "${pkgdir}/usr/share/applications"
+
 	# Install binary
-	install -Dm755 "${srcdir}/${_pkgname}/target/release/chatgpt" "${pkgdir}/usr/bin/chatgpt"
-	
+	install -Dm755 "${srcdir}/${_pkgname}/target/release/chatgpt" \
+		"${pkgdir}/usr/bin/chat-gpt"
+
 	# Generate and install Icons
-  for size in 32 64 128 256 512; do
-    mkdir -p ${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps
-    
-    convert -resize ${size}x${size} ${srcdir}/${_pkgname}/public/logo.png \
-      "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/chatgpt.png"
-  done
+	for size in 32 64 128 256 512; do
+		install -dm 755 "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps"
+
+		convert -resize ${size}x${size} "${srcdir}/${_pkgname}/public/logo.png" \
+			"${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/chat-gpt.png"
+	done
 }
 
 
