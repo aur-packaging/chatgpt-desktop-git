@@ -3,8 +3,8 @@
 
 pkgname=chatgpt-desktop-git
 _pkgname=ChatGPT
-pkgver=0.10.3+r1+gc293f07
-pkgrel=2
+pkgver=0.10.3+r3+g8a0b859
+pkgrel=1
 pkgdesc="ChatGPT Desktop Application (Mac, Windows and Linux)"
 arch=('x86_64'
       'i686' #ArchLinux32
@@ -23,7 +23,7 @@ depends=("hicolor-icon-theme"
 source=("git+https://github.com/lencx/ChatGPT.git"
         chat-gpt.desktop)
 md5sums=('SKIP'
-         '538f46d4c0285194f7c89c5c14969f7a')
+         '522e34cab26f9bf9247567e48f625f6d')
 
 pkgver() {
 	cd "${_pkgname}"
@@ -55,11 +55,3 @@ package() {
 			"${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/chat-gpt.png"
 	done
 }
-
-
-
-
-
-
-
-
