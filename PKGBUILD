@@ -6,7 +6,10 @@ _pkgname=ChatGPT
 pkgver=0.10.3+r1+gc293f07
 pkgrel=2
 pkgdesc="ChatGPT Desktop Application (Mac, Windows and Linux)"
-arch=('any')
+arch=('x86_64'
+      'i686' #ArchLinux32
+      'armv7h' #ArchLinuxARM
+      'aarch64') #ArchLinuxARM
 url="https://github.com/lencx/ChatGPT"
 license=("Apache")
 provides=("chatgpt-desktop")
