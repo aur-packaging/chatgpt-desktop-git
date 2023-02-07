@@ -15,7 +15,7 @@ license=("Apache")
 provides=("chatgpt-desktop")
 conflicts=("chatgpt-desktop")
 makedepends=("rust" "git" "imagemagick")
-depends=("openssl-1.1" "webkit2gtk")
+depends=("hicolor-icon-theme" "openssl" "webkit2gtk")
 md5sums=("SKIP" "538f46d4c0285194f7c89c5c14969f7a")
 source=("git+https://github.com/lencx/ChatGPT.git" chatgpt.desktop)
 
