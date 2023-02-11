@@ -31,7 +31,7 @@ pkgver() {
 }
 
 prepare() {
-	mkdir "${_pkgname}/dist"
+	mkdir -p "${_pkgname}/dist"
 }
 
 build() {
