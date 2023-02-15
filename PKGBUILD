@@ -26,6 +26,11 @@ source=("git+https://github.com/lencx/ChatGPT.git"
 md5sums=('SKIP'
          '522e34cab26f9bf9247567e48f625f6d')
 
+pkgver() {
+	cd "${_pkgname}"
+	git describe --tags | sed 's/^v//;s/[^-]*-g/r&/;s/-/+/g'
+}
+
 prepare() {
 	# Set CARGO_HOME to "${srcdir}/cargo"
 	export CARGO_HOME="${srcdir}/cargo"
