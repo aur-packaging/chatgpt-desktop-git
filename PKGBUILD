@@ -15,31 +15,36 @@ license=("Apache")
 provides=("chatgpt-desktop")
 conflicts=("chatgpt-desktop")
 makedepends=("imagemagick"
-             "rust"
              "git")
 depends=("hicolor-icon-theme"
          "openssl"
-         "webkit2gtk")
+         "webkit2gtk"
+         "rust")
+
 source=("git+https://github.com/lencx/ChatGPT.git"
         chat-gpt.desktop)
 md5sums=('SKIP'
          '522e34cab26f9bf9247567e48f625f6d')
 
-pkgver() {
-	cd "${_pkgname}"
-	git describe --tags | sed 's/^v//;s/[^-]*-g/r&/;s/-/+/g'
-}
-
 prepare() {
+	# Set CARGO_HOME to "${srcdir}/cargo"
+	export CARGO_HOME="${srcdir}/cargo"
 	mkdir "${_pkgname}/dist"
+	
+	# Download Rust dependencies
+	cd "${_pkgname}"
+	cargo fetch
 }
 
 build() {
 	cd "${_pkgname}"
-	cargo build --release
+	cargo build --release --frozen
 }
 
 package() {
+	# Set CARGO_HOME to "${srcdir}/cargo"
+	export CARGO_HOME="${srcdir}/cargo"
+
 	# Install desktop file
 	install -Dm644 "${srcdir}/chat-gpt.desktop" -t "${pkgdir}/usr/share/applications"
 
