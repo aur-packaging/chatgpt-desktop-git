@@ -34,7 +34,9 @@ pkgver() {
 prepare() {
 	# Set CARGO_HOME to "${srcdir}/cargo"
 	export CARGO_HOME="${srcdir}/cargo"
-	mkdir "${_pkgname}/dist"
+	if [ ! -d "${_pkgname}/dist" ]; then 
+		mkdir "${_pkgname}/dist"
+	fi
 	
 	# Download Rust dependencies
 	cd "${_pkgname}"
