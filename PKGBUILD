@@ -3,7 +3,7 @@
 
 pkgname=chatgpt-desktop-git
 _pkgname=ChatGPT
-pkgver=0.11.0+r15+gb36a4ce
+pkgver=0.12.0+r9+g6adb6e3
 pkgrel=1
 pkgdesc="ChatGPT Desktop Application (Mac, Windows and Linux)"
 arch=('x86_64'
@@ -15,11 +15,11 @@ license=("Apache")
 provides=("chatgpt-desktop")
 conflicts=("chatgpt-desktop")
 makedepends=("imagemagick"
-             "git")
+             "git"
+						 "cargo")
 depends=("hicolor-icon-theme"
          "openssl"
-         "webkit2gtk"
-         "rust")
+         "webkit2gtk")
 
 source=("git+https://github.com/lencx/ChatGPT.git"
         chat-gpt.desktop)
@@ -40,12 +40,14 @@ prepare() {
 	
 	# Download Rust dependencies
 	cd "${_pkgname}"
-	cargo fetch
+	cargo fetch --locked
 }
 
 build() {
 	cd "${_pkgname}"
-	cargo build --release # --frozen removed because some csv failed to download althought everything required was already download
+	export RUSTUP_TOOLCHAIN=stable
+  export CARGO_TARGET_DIR=target
+	cargo build --release --all-features # --frozen removed because some csv failed to download althought everything required was already download
 	# will debug later
 }
 
@@ -59,20 +61,12 @@ package() {
 	# Install binary
 	install -Dm755 "${srcdir}/${_pkgname}/target/release/chatgpt" \
 		"${pkgdir}/usr/bin/chat-gpt"
-
+	
 	# Generate and install Icons
 	for size in 8 16 20 22 24 32 48 64 96 128 192 256 512; do
 		install -dm 755 "${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps"
 
 		convert -resize ${size}x${size} "${srcdir}/${_pkgname}/public/logo.png" \
 			"${pkgdir}/usr/share/icons/hicolor/${size}x${size}/apps/chat-gpt.png"
-	done
-
-	#for _size in "192x192" "128x128" "96x96" "64x64" "48x48" "32x32" "24x24" "22x22" "20x20" "16x16" "8x8"; do
-    #install -dm755 "${pkgdir}/usr/share/icons/hicolor/${_size}/apps"
-    #convert "${srcdir}/${pkgname}.png" -strip -resize "${_size}" \
-			#"${pkgdir}/usr/share/icons/hicolor/${_size}/apps/chat-gpt.png"
-  #done
-	
-
+	done	
 }
